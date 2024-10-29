@@ -4,3 +4,10 @@ test.csv
 __pycache__/
 .vscode/
 .ipynb_checkpoints/
+*.gz
+*.log
+*.fdb_latexmk
+*.fls
+*.aux
+*.bbl
+*.blg
