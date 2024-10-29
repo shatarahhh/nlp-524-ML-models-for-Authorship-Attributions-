@@ -45,21 +45,21 @@ Christie’s Works
 \end{IEEEkeywords}
 
 \section{Introduction}
-Authorship attribution is a crucial task in the field of natural language processing, where the author of a given text is determined based on linguistic and stylistic patterns \cite{misini2022}. This project focuses on developing an authorship analysis model specifically for Agatha Christie, a famous crime and mystery novelist. The primary purpose of this project is to construct a statistical model capable of attributing authorship to Agatha Christie among a set of other authors, including  Maurice Leblanc, G. K. Chesterton, Lewis Carroll, and Herman Melville. The texts were sourced from Project Gutenberg, providing a diverse dataset for analysis. By analyzing stylistic and linguistic features extracted from the texts, the aim is to capture the unique aspects of Christie's writing style. Machine learning techniques such as logistic regression and clustering algorithms are employed to differentiate her works from others.
+Authorship attribution is a crucial task in the field of natural language processing, where the author of a given text is determined based on linguistic and stylistic patterns \cite{misini2022}. This project focuses on developing an authorship analysis model specifically for Agatha Christie, a famous crime and mystery novelist. The primary purpose of this project is to construct a statistical model capable of attributing authorship to Agatha Christie among a set of other arbitrary authors. The dataset used for training included 4 other authors: Maurice Leblanc, G. K. Chesterton, Lewis Carroll, and Herman Melville. The texts were sourced from Project Gutenberg, providing a diverse dataset for analysis. By analyzing stylistic and linguistic features extracted from the texts, the aim is to capture the unique aspects of Christie's writing style. Machine learning techniques such as logistic regression and clustering algorithms are employed to differentiate her works from others.
 
 \section{Methodology}
-A total of 81 novels from Project Gutenberg were collected to form the dataset. This included 7 novels by Agatha Christie and 74 novels by other authors: 14 by Maurice Leblanc, 21 by G.K. Chesterton, 3 by Lewis Carroll, and 4 by Herman Melville. These authors were chosen due to similarities in genre and style, providing a challenging dataset for authorship attribution. To better handle lengthy texts, the novels were split into chapters, and further into 100-sentence-long chunks. This segmentation improved the accuracy of the model by allowing finer feature analysis.
+A total of 64 novels from Project Gutenberg were collected to form the dataset. This included 12 novels by Agatha Christie and 52 novels by other authors: Maurice Leblanc, G.K. Chesterton, Lewis Carroll, and Herman Melville. Table \ref{tab1} shows the novel counts for each author. These authors were chosen due to similarities in genre and style, providing a challenging dataset for authorship attribution. To better handle lengthy texts, the novels were split into chapters, and further into 100-sentence-long chunks. This segmentation improved the accuracy of the model by allowing finer feature analysis.
 
 \subsection{Data Preprocessing}  
 To prepare the texts for feature extraction, standard text-cleaning steps were performed. This included:
 \begin{enumerate}
     \item \textbf{Tokenization:} Splitting text into sentences and words.
-    \item \textbf{Normalization:} Lowercasing and removing punctuation to standardize text.
+    \item \textbf{Normalization:} Lowercasing and splitting punctuation into separate tokens to standardize text.
     \item \textbf{Chunking:} Splitting novels into 100-sentence sections to handle lengthy texts effectively. To predict the author of a text, a majority vote of predictions for each chunk in the text is taken.
 \end{enumerate}
 
 \subsection{Feature Extraction}  
-A variety of textual and stylometric features were extracted for each text:
+A variety of textual and stylometric features were extracted for each text or partial chunk of a whole text:
 
 \begin{itemize}
     \item Textual Features
@@ -111,15 +111,15 @@ The corpus is composed of the following works:
             \textbf{Author} & \textbf{Number of Complete Novels} \\
             \hline
             \hline
-            Agatha Christie & 7 \\
+            Agatha Christie & 12 \\
             \hline
-            Maurice Leblanc & 14 \\
+            Maurice Leblanc & 17 \\
             \hline
-            G.K. Chesterton & 21 \\
+            G.K. Chesterton & 26 \\
             \hline
-            Lewis Carroll & 3 \\
+            Lewis Carroll & 4 \\
             \hline
-            Herman Melville & 4 \\
+            Herman Melville & 5 \\
             \hline
         \end{tabular}
         \label{tab1}
@@ -141,15 +141,15 @@ K-means clustering was performed on the extracted features to investigate whethe
 \subsubsection{Logistic Regression Binary Classification Experiment}
 
 The first supervised model was a logistic regression model, using TF-IDF to distinguish texts authored by Agatha Christie and those by other authors.
-The model was also trained on the feature vectors extracted, and then evaluated on the validation set.
+The model was also trained on the feature vectors extracted, and then evaluated on the validation set as well.
 
 \subsubsection{Support Vector Machine Multiclass Classification Experiment}
 
-The second supervised model was an extended iteration of the logistic regression model, using a support vector machine (SVM) to classify texts into one of the five authors. The model was trained only on sentence chunks in order to identify authors, and was then evaluated on the validation set.
+The second supervised model was an extended iteration of the logistic regression model, using a support vector machine (SVM) instead to classify texts into one of the five authors. The model was trained only on sentence chunks in order to identify authors, and was then tested against the validation set.
 
 \subsubsection{Binary Decision Tree Classification Experiment}
 
-The final supervised model was a decision tree classifier, using the same features as the logistic regression model. The model was trained only on the chunks of sentences, and then evaluated on the validation set.
+The final supervised model was a decision tree classifier, using the same features as the logistic regression model. The model was trained only on the chunks of sentences, and then additionally evaluated on the validation set.
 
 \section{Results}
 
@@ -160,7 +160,7 @@ The variance of each feature from author to author is plotted in a bar-chart in 
 \begin{figure}
     \caption{Variance of Features Across Authors}
     \begin{center}
-    \centerline{\includegraphics[width=0.55\textwidth]{./vary1.png}}
+    \centerline{\includegraphics[width=0.48\textwidth]{./vary1.png}}
     \end{center}
     \centering
     \label{vary1}
@@ -182,7 +182,7 @@ Next, the three median features were plotted in 3D space to visualize the cluste
 \begin{figure}
     \caption{3D Plot of Features With Median Importance}
     \begin{center}
-    \centerline{\includegraphics[width=0.5\textwidth]{./vary3.png}}
+    \centerline{\includegraphics[width=0.45\textwidth]{./vary3.png}}
     \end{center}
     \centering
     \label{vary3}
